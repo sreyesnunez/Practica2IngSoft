@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Sismos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/estilos.css">
+    
+    <style>
+        #map {
+            height: 90vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Sismos en México</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script th:inline="javascript">
+        const sismos = /*[[${sismos}]]*/ [];
+
+        const map = L.map('map').setView([23.6345, -102.5528], 5); 
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        sismos.forEach(sismo => {
+            const marcador = L.marker([sismo.latitud, sismo.longitud]).addTo(map);
+
+            marcador.bindPopup(
+                `<b>Zona:</b> ${sismo.zona}<br/>
+                <b>Fecha:</b> ${sismo.fecha}<br/>
+                <b>Hora:</b> ${sismo.hora}<br/>
+                <b>Magnitud:</b> ${sismo.magnitud}<br/>
+                <b>Profundidad:</b> ${sismo.profundidad} km`
+            );
+        });
+    </script>
+</body>
+</html>

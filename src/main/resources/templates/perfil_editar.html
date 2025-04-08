@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/estilos.css">
+    
+</head>
+<body>
+    <h2>Editar Perfil</h2>
+
+    <form th:action="@{/usuario/editar}" th:object="${usuario}" method="post">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" th:field="*{id}" />
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" th:field="*{nombre}" required />
+
+        <label for="email">Correo:</label>
+        <input type="email" th:field="*{email}" required />
+
+        <label for="nuevaPassword">Nueva contraseña (opcional):</label>
+        <input type="password" id="nuevaPassword" name="nuevaPassword" class="form-control" />
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <a href="/usuario">Cancelar</a>
+</body>
+</html>
